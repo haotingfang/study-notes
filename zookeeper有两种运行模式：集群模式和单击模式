@@ -1,14 +1,33 @@
-zookeeper有两种运行模式：集群模式和单击模式。
+下载zookeeper安装包：https://zookeeper.apache.org/releases.html
 
-下载zookeeper安装包：http://apache.fayea.com/zookeeper/
 下载完成，通过tar -zxvf解压
+
 常用命令
-1.启动ZK服务:bin/zkServer.sh start
-2.查看ZK服务状态:bin/zkServer.sh status
-3.停止ZK服务:bin/zkServer.sh stop
-4.重启ZK服务:bin/zkServer.sh restart
-5.连接服务器bin/zkCli.sh -timeout 0 -r -server ip:port
+
+启动ZK服务:bin/zkServer.sh start
+查看ZK服务状态:bin/zkServer.sh status
+停止ZK服务:bin/zkServer.sh stop
+重启ZK服务:bin/zkServer.sh restart
+连接服务器bin/zkCli.sh -timeout 0 -r -serverip:port                                                           bin/zkCli.sh -server 127.0.0.1:2182
 单机环境安装一般情况下，在开发测试环境，没有这么多资源的情况下，而且也不需要特别好的稳定性的前提下，我们可以使用单机部署；初次使用zookeeper，需要将conf目录下的zoo_sample.cfg文件copy一份重命名为zoo.cfg修改dataDir目录，dataDir表示日志文件存放的路径（关于zoo.cfg的其他配置信息后面会讲）
 
 Zookeeper 配置集群
 https://cloud.tencent.com/developer/article/1610867
+
+配置伪集群遇到问题
+bin/zkServer.sh start zoo_0.cfg
+ZooKeeper JMX enabled by default
+Using config: /Users/dasouche/Documents/MyDeveTool/zookeeper/apache-zookeeper-3.5.9-bin/bin/../conf/zoo_0.cfg
+Starting zookeeper ... FAILED TO START
+
+排除下载版本问题，端口冲突问题（参照下列文章，备注admin.serverPort端口还是需要配置，不然日志文件有错误）https://blog.csdn.net/peng2hui1314/article/details/107255142
+查看zoo_0.cfg配置的日志目录文件，并未产生日志，
+查看zoo.cfg配置文件下的日志目录，提过报错信息
+Invalid config, exiting abnormally org.apache.zookeeper.server.quorum.QuorumPeerConfig$ConfigException: Address unresolved: 127.0.0.1:3388
+
+查看配置文件zoo_0.cfg,
+server.0=127.0.0.1:2287:3387
+server.1=127.0.0.1:2288:3388
+server.2=127.0.0.1:2289:3389
+配置中间有空格，删除空格，启动正常
+
