@@ -1,8 +1,8 @@
-springboot自动装配的原理
+一、springboot自动装配的原理
 https://zhuanlan.zhihu.com/p/163685081?utm_source=wechat_session&utm_medium=social&utm_oi=904404379107459072
 
 
-1、对已有的组件，使用starter进行封装达到开箱即用的目的。 如果学过zookeeper，可以结合curator+zookeeper实现基于zookeeper的starter
+二、对已有的组件，使用starter进行封装达到开箱即用的目的。 如果学过zookeeper，可以结合curator+zookeeper实现基于zookeeper的starter
 什么是curator?
  https://www.jianshu.com/p/7804f5d98c0c
 https://zhuanlan.zhihu.com/p/244889644
@@ -15,12 +15,9 @@ curator项目（实现api操作、分布式锁）
 https://github.com/haotingfang/springboot-start-demo.git
 
 
-
-
-Start的实现
+三、Start的实现
 参考：https://www.jianshu.com/p/eee1f1517cfa
-
-https://github.com/haotingfang/springboot-start-demo.git
+代码：https://github.com/haotingfang/springboot-start-demo.git
 https://github.com/haotingfang/zookeeper-spring-boot-starter2.git
 
 
