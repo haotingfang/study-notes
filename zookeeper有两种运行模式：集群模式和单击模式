@@ -1,0 +1,14 @@
+zookeeper有两种运行模式：集群模式和单击模式。
+
+下载zookeeper安装包：http://apache.fayea.com/zookeeper/
+下载完成，通过tar -zxvf解压
+常用命令
+1.启动ZK服务:bin/zkServer.sh start
+2.查看ZK服务状态:bin/zkServer.sh status
+3.停止ZK服务:bin/zkServer.sh stop
+4.重启ZK服务:bin/zkServer.sh restart
+5.连接服务器bin/zkCli.sh -timeout 0 -r -server ip:port
+单机环境安装一般情况下，在开发测试环境，没有这么多资源的情况下，而且也不需要特别好的稳定性的前提下，我们可以使用单机部署；初次使用zookeeper，需要将conf目录下的zoo_sample.cfg文件copy一份重命名为zoo.cfg修改dataDir目录，dataDir表示日志文件存放的路径（关于zoo.cfg的其他配置信息后面会讲）
+
+Zookeeper 配置集群
+https://cloud.tencent.com/developer/article/1610867
