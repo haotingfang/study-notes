@@ -51,3 +51,28 @@ iii.如果ZXID相同，那么就比较myid。myid较大的服务器作为Leader�
 
 四、作业：使用zkclient这个zookeeper客户端，实现分布式锁！  这个锁需要实现Lock接口！
 https://github.com/haotingfang/springboot-start-demo
+
+
+五、watcher为什么只实现一次监听，如何实现持久监听
+其一、如果watcher实现持久监听，zk服务端需要存储所有监听节点事件，会造成服务器端压力；其二、如果watcher实现持久监听，触发订阅方必须显式取消，那么触发一次的场景若要实现，就要显示的调用取消。两种实际使用场景而言，实现一次监听，将持久监听的权限交给客户端，更加的合适
+
+持久监听Demo
+https://github.com/haotingfang/springboot-start-demo
+
+六、分析watcher的实现原理
+参考链接：
+总结分析
+https://www.zhihu.com/zvideo/1371575356030259200
+结合源码分析
+https://blog.csdn.net/sdaujsj1/article/details/106456303?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522163091536116780265464333%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fblog.%2522%257D&request_id=163091536116780265464333&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~blog~first_rank_v2~rank_v29-1-106456303.pc_v2_rank_blog_default&utm_term=watcher&spm=1018.2226.3001.4450
+https://blog.csdn.net/sdaujsj1/article/details/106459085?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522163091536116780265464333%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fblog.%2522%257D&request_id=163091536116780265464333&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~blog~first_rank_v2~rank_v29-2-106459085.pc_v2_rank_blog_default&utm_term=watcher&spm=1018.2226.3001.4450
+https://blog.csdn.net/sdaujsj1/article/details/106461503?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522163091536116780265464333%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fblog.%2522%257D&request_id=163091536116780265464333&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~blog~first_rank_v2~rank_v29-3-106461503.pc_v2_rank_blog_default&utm_term=watcher&spm=1018.2226.3001.4450
+
+ZooKeeper 的 Watcher 机制，总的来说可以分为三个过程：
+1．客户端注册 Watcher、
+2．服务器处理 Watcher
+3．客户端回调 Watcher
+客户端注册 watcher 有 3 种方式，getData、exists、getChildren
+
+
+七、zookeeper学完了，基于公司现有的项目和功能，能够使用zookeeper解决具体的问题呢？配置中心？leader选举？ 可以尝试思考一下，并且想想这个方案如何落实。
