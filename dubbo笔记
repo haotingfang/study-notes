@@ -19,3 +19,71 @@ Dubbo 支持的协议有 dubbo、hessian、http、memcacheed、redis、rest、we
 三、在Dubbo中，zookeeper主要起到什么样的作用？请简单描述一下Dubbo服务注册发现的实现原理
 dubbo中使用zookeeper来实现注册中心。当然在目前最新的版本中。Dubbo能够支持的注册中心有：consul、etcd、nacos、sofa、zookeeper、redis、multicast
 Dubbo服务注册发现的实现原理是zk的临时节点及watcher机制（可扩展watcher机制的实现原理）
+
+
+四、Dubbo-admin管理平台的安装与使用：
+下载安装
+git clone https://github.com/apache/dubbo-admin.git
+
+前端启动步骤
+cd dubbo-admin-ui
+npm install
+npm run dev
+后端启动步骤
+cd dubbo-admin-server
+mvn clean package
+cd target
+java -jar dubbo-admin-server-0.1.jar
+
+mvn clean package
+这一步一直报错  未解决这个问题，直接启动dubbo-admin-server模块的 DubboAdminApplication类 ，启动成功
+官方文档：https://dubbo.apache.org/zh/docsv2.7/admin/ops/introduction
+备注：springboot+dubbo demo案例 配置中心未生效
+
+
+五、Dubbo的服务远程调用，如何实现异步通信
+官方文档：https://dubbo.apache.org/zh/blog/2018/08/14/dubbo-%E5%85%B3%E4%BA%8E%E5%90%8C%E6%AD%A5/%E5%BC%82%E6%AD%A5%E8%B0%83%E7%94%A8%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/
+
+
+六、Dubbo配置的优先级别是什么样的？
+方法级优先，接口级次之，全局配置再次之。
+如果级别一样，则消费方优先，提供方次之
+
+
+七、Dubbo默认的重试次数是多少？
+Dubbo 服务在尝试调用一次之后，如出现非业务异常(服务突然不可用、超时等)，Dubbo 默认会进行额外的最多2次重试.
+
+官方文档：https://dubbo.apache.org/zh/docsv2.7/user/examples/%E9%87%8D%E8%AF%95%E6%AC%A1%E6%95%B0%E9%85%8D%E7%BD%AE/
+
+
+八、Dubbo2.7有哪些新特性？
+Dubbo 2.7.x 作为 Apache 的孵化版本，除了代码优化之外，还新增了许多重磅的新特性，最典型的三个新特性
+异步化改造
+三大中心改造
+服务治理增强
+
+官方文档：https://dubbo.apache.org/zh/blog/2018/08/15/dubbo2.7-%E4%B8%89%E5%A4%A7%E6%96%B0%E7%89%B9%E6%80%A7%E8%AF%A6%E8%A7%A3/
+
+
+九、Dubbo实现了哪几种负载均衡算法？分别是如何实现的？
+Dubbo内置了4种负载均衡策略:
+RandomLoadBalance:随机负载均衡。随机的选择一个。是Dubbo的默认负载均衡策略。
+RoundRobinLoadBalance:轮询负载均衡。轮询选择一个。
+LeastActiveLoadBalance:最少活跃调用数，相同活跃数的随机。活跃数指调用前后计数差。使慢的 Provider 收到更少请求，因为越慢的 Provider 的调用前后计数差会越大。
+ConsistentHashLoadBalance:一致性哈希负载均衡。相同参数的请求总是落在同一台机器上。
+
+官方文档：https://dubbo.apache.org/zh/blog/2018/08/10/dubbo%E7%9A%84%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/
+
+
+十、Dubbu服务提供者的接口要做升级，如何实现对老版本的兼容？
+官方文档：https://dubbo.apache.org/zh/docs/v2.7/user/examples/multi-versions/
+
+
+
+Springboot+dubbo Demo地址：
+客户端 https://github.com/haotingfang/dubbo-client.git
+服务端 https://github.com/haotingfang/dubbo-springboot.git
+
+
+
+
