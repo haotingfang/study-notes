@@ -79,6 +79,39 @@ Dubbo内置了4种负载均衡策略:
 官方文档：https://dubbo.apache.org/zh/docs/v2.7/user/examples/multi-versions/
 
 
+十一、Dubbo SPI提供了哪些功能，优势是什么？
+参考资料：https://bbs.huaweicloud.com/blogs/225105
+https://blog.csdn.net/somehow1002/article/details/106441593
+https://blog.csdn.net/somehow1002/article/details/106316723
+官网文档：https://dubbo.apache.org/zh/docs/v2.7/dev/spi/#%E6%89%A9%E5%B1%95%E7%82%B9%E8%87%AA%E5%8A%A8%E6%BF%80%E6%B4%BB
+
+Dubbo 的扩展点加载从 JDK 标准的 SPI (Service Provider Interface) 扩展点发现机制加强而来。
+Dubbo 改进了 JDK 标准的 SPI 的以下问题：
+JDK 标准的 SPI 会一次性实例化扩展点所有实现，如果有扩展实现初始化很耗时，但如果没用上也加载，会很浪费资源。
+如果扩展点加载失败，连扩展点的名称都拿不到了。比如：JDK 标准的 ScriptEngine，通过 getName() 获取脚本类型的名称，但如果 RubyScriptEngine 因为所依赖的 jruby.jar 不存在，导致 RubyScriptEngine 类加载失败，这个失败原因被吃掉了，和 ruby 对应不起来，当用户执行 ruby 脚本时，会报不支持 ruby，而不是真正失败的原因。
+增加了对扩展点 IoC 和 AOP 的支持，一个扩展点可以直接 setter 注入其它扩展点。
+
+Dubbo SPI包括静态扩展点、自适应扩展点、激活扩展点
+@SPI注解可以使用在类，接口和枚举类上，dubbo框架中都是使用在接口上。
+主要作用是相当于一个扩展点，可以有多个不同的实现。运行时通过配置找到具体的实现类。
+@Adaptive 可以标记在类，接口，枚举类和方法上。
+在dubbo中主要是用在接口的方法上，直到扩展点方法执行时才决定调用是一个扩展点实现。
+标记在方法上时，会使用代理模式自动生成扩展类
+@Activate 可以标记在类，接口，枚举类和方法上。
+主要使用在有多个扩展点实现，需要根据不同条件被激活的场景中，如fileter需要多个同时激活，因为每个filter实现的是不同功能。
+
+
+十二、Dubbo是如何实现IOC的
+参考资料：https://bbs.huaweicloud.com/blogs/225105
+https://bbs.huaweicloud.com/blogs/224241
+前面dubbo源码翻阅中已经提过一些相关的IOC的。大致为以下几点：
+
+在讲解ExtensionLoader源码的构造函数的时候，我们说过，每一个ExtensionLoader实例都有一个 objectFactory 属性，他是实现Ioc的关键；
+ 相比较于JDK的SPI机制，dubbo的SPI机制支持扩展通过setter的方式来注入其他扩展点。
+在调用ExtensionLoader的getExtension方法时，在获取了相应的class并创建了instance之后，通过injectExtension(intance)方法来通过setter的方式来注入其他扩展点。
+loadFile函数解析注解@SPI配置时，假如这个类带@Adaptive注解，缓存到cachedAdaptiveClass。
+
+
 
 Springboot+dubbo Demo地址：
 客户端 https://github.com/haotingfang/dubbo-client.git
